@@ -4,11 +4,13 @@ import FormHookExample from './FormHookExample';
 import Layout from './Layout';
 import LoginPage from './LoginPage';
 import Menu from './Menu';
-import ErfassungEdit from './page/task/ErfassungEdit';
-import ErfassungReadOnly from './page/task/ErfassungReadOnly';
-import Leiter from './page/task/Leiter';
+import ProcessInstancesPage from './page/processinstances/ProcessInstancesPage';
+import ErfassungEdit from './page/task/erfassung/ErfassungEdit';
+import ErfassungReadOnly from './page/task/erfassung/ErfassungReadOnly';
+import LeiterEdit from './page/task/leiter/LeiterEdit';
+import LeiterReadOnly from './page/task/leiter/LeiterReadOnly';
 import Success from './page/task/Success';
-import TasksPage from './page/task/TasksPage';
+import TasksPage from './page/tasks/TasksPage';
 import PublicPage from './PublicPage';
 import RequireAuth from './RequireAuth';
 import Workflow from './Workflow';
@@ -29,7 +31,9 @@ function App() {
                 <Route path="workflow" element={<Workflow />} />
                 <Route path="tasks/:id/erfassung/edit" element={<ErfassungEdit />} />
                 <Route path="tasks/:id/erfassung" element={<ErfassungReadOnly />} />
-                <Route path="tasks/:id/leiter" element={<Leiter />} />
+                <Route path="tasks/:id/leiter/edit" element={<LeiterEdit />} />
+                <Route path="tasks/:id/leiter" element={<LeiterReadOnly />} />
+                <Route path="processinstances" element={<ProcessInstancesPage />} />
                 <Route path="success" element={<Success />} />
               </Route>
             </Route>

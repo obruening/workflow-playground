@@ -16,13 +16,11 @@ function Menu() {
                         <ul>
                             <li className={getActive([location.pathname ==='/workflow'])}><Link to="/workflow">Workflow</Link></li>
                             <li className={getActive([location.pathname === '/', location.pathname.startsWith('/task')]) }><Link to="/">Tasks</Link></li>
-                            <li className={getActive([location.pathname === '/form'])}><Link to="/form">Form Hook Example</Link></li>
+                            <li className={getActive([location.pathname === '/processinstances'])}><Link to="/processinstances">Process Instances</Link></li>
                         </ul>
                     </div>
 
                     <Outlet />
-
-
                 </div>
             </div>
         </>
