@@ -6,5 +6,3 @@ import com.example.backend.model.primary.Order;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 }
-
-

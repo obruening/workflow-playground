@@ -11,13 +11,13 @@ import com.example.backend.repository.primary.ItemRepository;
 
 @Service
 public class ItemService {
-	
-	@Autowired
-	private ItemRepository itemRepository;
-	
-	@Transactional("primaryTransactionManager")
-	public List<Item> findAll() {
-		
-		return itemRepository.findAll();
-	}
+
+    @Autowired
+    private ItemRepository itemRepository;
+
+    @Transactional("primaryTransactionManager")
+    public List<Item> findAll() {
+
+        return itemRepository.findAll();
+    }
 }

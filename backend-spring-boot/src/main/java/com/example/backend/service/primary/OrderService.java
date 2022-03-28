@@ -14,42 +14,41 @@ import com.example.backend.repository.primary.OrderRepository;
 @Service
 public class OrderService {
 
-	@Autowired
-	private OrderRepository orderRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
-	@Transactional("primaryTransactionManager")
-	public Order save(Order order) {
-		
-		order.getItemList().forEach(item -> item.setOrder(order));
-		
-		return orderRepository.save(order);
-	}
+    @Transactional("primaryTransactionManager")
+    public Order save(Order order) {
 
-	@Transactional("primaryTransactionManager")
-	public List<Order> findAll() {
-		
-		return orderRepository.findAll();
-	}
+        order.getItemList().forEach(item -> item.setOrder(order));
 
-	@Transactional("primaryTransactionManager")
-	public Optional<Order> findById(Long id) {
-		
-		return orderRepository.findById(id);
-	}
-	
-	
-	@Transactional("primaryTransactionManager")
-	public Order merge(Order order) {
-		
-		if (order.getId() != null) {
-			
-			Order persistedOrder = findById(order.getId()).orElseThrow();
-			persistedOrder = OrderMerge.mergeSimpleAttributes(order, persistedOrder);
-			persistedOrder = OrderMerge.mergeItems(order, persistedOrder);
-			return orderRepository.save(persistedOrder);
-    	}
-		
-		// wenn die id null ist, dann ist es kein merge, something is wrong
-		return null;
-	}
+        return orderRepository.save(order);
+    }
+
+    @Transactional("primaryTransactionManager")
+    public List<Order> findAll() {
+
+        return orderRepository.findAll();
+    }
+
+    @Transactional("primaryTransactionManager")
+    public Optional<Order> findById(Long id) {
+
+        return orderRepository.findById(id);
+    }
+
+    @Transactional("primaryTransactionManager")
+    public Order merge(Order order) {
+
+        if (order.getId() != null) {
+
+            Order persistedOrder = findById(order.getId()).orElseThrow();
+            persistedOrder = OrderMerge.mergeSimpleAttributes(order, persistedOrder);
+            persistedOrder = OrderMerge.mergeItems(order, persistedOrder);
+            return orderRepository.save(persistedOrder);
+        }
+
+        // wenn die id null ist, dann ist es kein merge, something is wrong
+        return null;
+    }
 }

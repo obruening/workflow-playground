@@ -14,20 +14,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "items")
 public class Item {
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @JsonIgnore
-    @ManyToOne(cascade= {})
-    @JoinColumn(name="order_id")
+    @ManyToOne(cascade = {})
+    @JoinColumn(name = "order_id")
     private Order order;
-    
+
     private String productName;
-    
+
     private Long productNumber;
-    
+
     @Transient
     private boolean delete = false;
 
@@ -62,7 +62,7 @@ public class Item {
     public void setProductNumber(Long productNumber) {
         this.productNumber = productNumber;
     }
-    
+
     public boolean getDelete() {
         return delete;
     }

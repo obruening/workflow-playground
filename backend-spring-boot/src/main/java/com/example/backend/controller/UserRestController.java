@@ -17,26 +17,26 @@ import com.example.backend.UserService;
 @RestController
 @RequestMapping(value = "/api/users")
 public class UserRestController {
-	
-	@Autowired
-	private UserService userService;
-	
+
+    @Autowired
+    private UserService userService;
+
     @ModelAttribute
     public void setResponseHeader(HttpServletResponse response) {
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);
-    }   
-    
+    }
+
     @RequestMapping(method = RequestMethod.GET)
     public List<User> userList() {
-    	
-    	return userService.getUserList();
+
+        return userService.getUserList();
     }
-    
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public User user(@PathVariable("id") String id) {
-    	
-    	return userService.getUser(id);
+
+        return userService.getUser(id);
     }
 }

@@ -16,21 +16,21 @@ import com.example.backend.service.primary.WorkflowService;
 @RestController
 @RequestMapping(value = "/api/workflows")
 public class WorkflowRestController {
-	
-	private static Logger logger = LoggerFactory.getLogger(WorkflowRestController.class);
-	
-	@Autowired
-	private WorkflowService workflowService;
-	
-	@RequestMapping(method = RequestMethod.POST)
+
+    private static Logger logger = LoggerFactory.getLogger(WorkflowRestController.class);
+
+    @Autowired
+    private WorkflowService workflowService;
+
+    @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> create(@RequestHeader(name = "Fake-User", required = false) String fakeUser) {
-		
-		logger.info(fakeUser);
-		
-		CreateResult createResult = workflowService.create(fakeUser);
-		
-		return new ResponseEntity<CreateResult>(createResult, HttpStatus.OK);
-		
-	}
+
+        logger.info(fakeUser);
+
+        CreateResult createResult = workflowService.create(fakeUser);
+
+        return new ResponseEntity<CreateResult>(createResult, HttpStatus.OK);
+
+    }
 
 }

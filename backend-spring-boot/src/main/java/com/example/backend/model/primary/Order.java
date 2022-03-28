@@ -23,16 +23,16 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 @Entity
 @Table(name = "orders")
 public class Order {
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     private String description;
-    
+
     private Long customerId;
-    
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "order", orphanRemoval=true)
+
+    @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "order", orphanRemoval = true)
     @OrderBy("id asc")
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Item> itemList = new ArrayList<>();
@@ -68,15 +68,15 @@ public class Order {
     public void setItemList(List<Item> itemList) {
         this.itemList = itemList;
     }
-    
+
     @Override
     public String toString() {
-    	
-    	return ReflectionToStringBuilder.toString(this);
+
+        return ReflectionToStringBuilder.toString(this);
     }
-    
+
     public String toJson() throws JsonProcessingException {
-    	ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-    	return ow.writeValueAsString(this);
+        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        return ow.writeValueAsString(this);
     }
 }

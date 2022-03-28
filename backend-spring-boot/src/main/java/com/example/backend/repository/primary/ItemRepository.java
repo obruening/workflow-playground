@@ -6,5 +6,3 @@ import com.example.backend.model.primary.Item;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
 }
-
-

@@ -20,54 +20,52 @@ import com.example.backend.model.primary.Order;
 @Transactional("primaryTransactionManager")
 @Service
 public class WorkflowService {
-	
-	private static Logger logger = LoggerFactory.getLogger(WorkflowService.class);
-	
-	@Autowired
-	private OrderService orderService; 
 
-	@Autowired
-	private RuntimeService runtimeService; 
+    private static Logger logger = LoggerFactory.getLogger(WorkflowService.class);
 
-	@Autowired
-	private TaskService taskService; 
+    @Autowired
+    private OrderService orderService;
 
+    @Autowired
+    private RuntimeService runtimeService;
 
-	public CreateResult create(String user) {
-		
+    @Autowired
+    private TaskService taskService;
+
+    public CreateResult create(String user) {
+
         Order order = new Order();
         order.setDescription("this is my description");
-        
-        
+
         Item item1 = new Item();
         item1.setProductName("item1");
         item1.setOrder(order);
-        
+
         Item item2 = new Item();
         item2.setProductName("item2");
         item2.setOrder(order);
-        
+
         order.getItemList().add(item1);
         order.getItemList().add(item2);
-        
+
         order = orderService.save(order);
-        
-        ProcessInstance processInstance = runtimeService
-            .startProcessInstanceByKey("dummy_dummy", Collections.singletonMap("order", order));
+
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("dummy_dummy",
+                Collections.singletonMap("order", order));
         Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-        
+
         taskService.setAssignee(task.getId(), user);
-        
+
         return new CreateResult(task.getId(), task.getName());
-		
-	}
-	
-	public void complete(TaskPayload taskPayload) {
-		
-		String id = taskPayload.getId();
-		Order order = taskPayload.getOrder();
-		orderService.merge(order);
-		taskService.complete(id);
-	}
+
+    }
+
+    public void complete(TaskPayload taskPayload) {
+
+        String id = taskPayload.getId();
+        Order order = taskPayload.getOrder();
+        orderService.merge(order);
+        taskService.complete(id);
+    }
 
 }
