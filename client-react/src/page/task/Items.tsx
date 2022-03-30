@@ -47,7 +47,7 @@ function Items(itemProps: ItemProps) {
 
                     <p className="control">
                         {index === 0 && <label className="label has-text-centered">Action</label> }
-                        <button className="button is-light">
+                        <button className="button is-link is-light">
                             Delete
                         </button>
                     </p>

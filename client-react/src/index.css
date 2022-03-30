@@ -15,4 +15,9 @@ code {
 */
 
 
+
 @import 'bulma/css/bulma.css';
+
+.box {
+  background-color: #fafafa;
+}
