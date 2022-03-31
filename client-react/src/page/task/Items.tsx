@@ -16,7 +16,7 @@ function Items(itemProps: ItemProps) {
             </div>
 
             <div className="field is-grouped">
-                <button className="button is-link" onClick={(event: React.MouseEvent<HTMLButtonElement>): void => {
+                <button className="button is-link is-light" onClick={(event: React.MouseEvent<HTMLButtonElement>): void => {
                     event.preventDefault();
                     append({ productName: "dummy product name" });
                 }}>
