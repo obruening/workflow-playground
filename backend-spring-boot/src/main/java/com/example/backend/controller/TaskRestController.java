@@ -2,7 +2,6 @@ package com.example.backend.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.camunda.bpm.engine.RepositoryService;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.User;
+import com.example.backend.UserService;
 import com.example.backend.dto.TaskContainer;
 import com.example.backend.dto.TaskPayload;
 import com.example.backend.dto.TaskProjection;
@@ -43,8 +43,13 @@ public class TaskRestController {
     @Autowired
     private WorkflowService workflowService;
 
+    /*
     @Autowired
     private List<User> userList;
+    */
+    
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> tasks(@RequestHeader(name = "Fake-User", required = false) String fakeUser) {
@@ -55,12 +60,25 @@ public class TaskRestController {
             return new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
         }
 
+        User user = userService.getUser(fakeUser);
+        List<String> groupList = user.getGroupList().stream().map(g -> g.getName()).collect(Collectors.toList());
+        
+        /*
         Optional<User> optionalUser = userList.stream().filter(u -> u.getId().equals(fakeUser)).findFirst();
         User user = optionalUser.get();
         List<String> groupList = user.getGroupList().stream().map(g -> g.getName()).collect(Collectors.toList());
+         */
 
-        List<Task> tasks = taskService.createTaskQuery().or().taskAssignee(fakeUser).taskCandidateGroupIn(groupList)
-                .includeAssignedTasks().endOr().orderByTaskCreateTime().desc().list();
+        List<Task> tasks = taskService
+        		.createTaskQuery()
+        		.or()
+        		.taskAssignee(fakeUser)
+        		.taskCandidateGroupIn(groupList)
+                .includeAssignedTasks()
+                .endOr()
+                .orderByTaskCreateTime()
+                .desc()
+                .list();
         // List<Task> tasks =
         // taskService.createTaskQuery().orderByTaskCreateTime().desc().list();
 
