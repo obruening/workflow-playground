@@ -6,10 +6,10 @@ function ButtonBar() {
 
         <div className="field is-grouped">
             <div className="control">
-                <input type="submit" className="button is-link" value="Submit" />
+                <Link className="button is-link" to={"/"}>Cancel</Link>
             </div>
             <div className="control">
-                <Link className="button is-link is-light" to={"/"}>Cancel</Link>
+                <input type="submit" className="button is-success" value="Complete Task" />
             </div>
         </div>
     )
