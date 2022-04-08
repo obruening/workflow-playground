@@ -1,7 +1,9 @@
 import { SubmitHandler, useForm } from "react-hook-form";
+import Box from "../../../Box";
 import { Order } from "../../../model/task/order";
 import ButtonBar from "../ButtonBar";
-import Items from "../Items";
+import ItemsForm from "../form/ItemsForm";
+import OrderForm from "../form/OrderForm";
 
 
 // https://codesandbox.io/s/ji8fv?file=/src/App.tsx
@@ -15,33 +17,13 @@ function ErfassungForm(erfassungFormProps: ErfassungFormProps) {
 
     let formData = erfassungFormProps.order;
 
-    const { control, register, handleSubmit, watch, formState: { errors } } = useForm<Order>({ defaultValues: formData });
+    const { control, register, handleSubmit, watch, formState } = useForm<Order>({ defaultValues: formData });
 
     return (
         <>
             <form onSubmit={handleSubmit(erfassungFormProps.onSubmitFunc)}>
-
-                <div className="field">
-                    <label className="label" htmlFor="description">Description</label>
-                    <div className="control">
-                        <input id="description" style={{"width": "70%"}} className="input" defaultValue="test" {...register("description")} />
-                    </div>
-                </div>
-
-                <div className="field">
-                    <label className="label" htmlFor="customerId">Customer Id</label>
-                    <div className="control">
-                        <input id="customerId" style={{"width": "70%"}} className="input" {...register("customerId", { required: true })} />
-                    </div>
-                    {errors.customerId && <p className="help is-danger">This field is required</p>}
-                </div>
-
-                <Items register={register} control={control} />
-
-                <div className="content">
-                    <hr className="hr" />
-                </div>
-
+                <OrderForm register={register} control={control} formState={formState} />
+                <ItemsForm register={register} control={control} formState={formState} />
                 <ButtonBar />
             </form>
         </>

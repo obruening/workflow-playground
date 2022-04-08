@@ -8,6 +8,8 @@ import { TaskContainer } from "../../../model/task/taskContainer";
 import ErfassungForm from "./ErfassungForm";
 import Header from "../Header";
 import { useNavigate } from "react-router-dom";
+import ErrorBox from "../ErrorBox";
+import Box from "../../../Box";
 
 function ErfassungEdit() {
 
@@ -16,6 +18,7 @@ function ErfassungEdit() {
     const [taskContainer, setTaskContainer] = useState<TaskContainer>();
     const auth = useAuth();
     const navigate = useNavigate();
+    const error = true;
 
     const onSubmit: SubmitHandler<Order> = order => {
 
@@ -41,14 +44,16 @@ function ErfassungEdit() {
 
 
     return (
-        <div className="columns">
-            <div className="column">
-                <div className="box">
-                    {taskContainer?.taskProjection && <Header taskKey={taskContainer?.taskProjection} />}
-                    {taskContainer?.order && <ErfassungForm order={taskContainer?.order} onSubmitFunc={onSubmit} />}
-                </div>
-            </div>
-        </div>
+        <>
+            {taskContainer?.taskProjection && <Header taskKey={taskContainer?.taskProjection} />}
+
+            {/*
+            {error && <ErrorBox errorMessageKey="Ich bin ein Fehler !" />}
+            */}
+            
+            {taskContainer?.order && <ErfassungForm order={taskContainer?.order} onSubmitFunc={onSubmit} />}
+
+        </>
     )
 }
 

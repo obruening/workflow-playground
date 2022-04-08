@@ -1,38 +1,41 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../../authContext";
+import Box from "../../../Box";
 import { TaskContainer } from "../../../model/task/taskContainer";
+import useFetch from "../../../useFetch";
+import ErrorBox from "../ErrorBox";
 import Header from "../Header";
 import ReadOnlyContainer from "../ReadOnlyContainer";
 
 function ErfassungReadOnly() {
 
     const { id } = useParams();
-
-    const [taskContainer, setTaskContainer] = useState<TaskContainer>();
     const auth = useAuth();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-
-        axios.get<TaskContainer>(`/api/tasks/${id}`, { headers: { "Fake-User": auth.user?.id || '' } })
-            .then(response => {
-                setTaskContainer(response.data);
-                console.log(response.data);
-            })
-    }, [auth, id]);
-
+    const { error, isPending, data: taskContainer } = useFetch<TaskContainer>(`/api/tasks/${id}`, auth.user?.id || '');
 
     return (
-        <div className="columns">
-            <div className="column">
-                <div className="box">
-                    {taskContainer?.taskProjection && <Header taskKey={taskContainer?.taskProjection} />}
-                    {taskContainer?.order && <ReadOnlyContainer order={taskContainer?.order} />}
-                </div>
-            </div>
-        </div>
+        <>
+            {error && <ErrorBox errorMessageKey={JSON.stringify(error, null, 4)} />}
+            {isPending && <div>Loading...</div>}
+            {taskContainer?.taskProjection && <Header taskKey={taskContainer?.taskProjection} />}
+            {taskContainer?.order && <ReadOnlyContainer order={taskContainer?.order} />}
+
+            {taskContainer?.taskProjection &&
+                <Box>
+                    <div className="field is-grouped">
+                        <div className="control">
+                            <Link className="button is-link" to={"/"}>Back</Link>
+                        </div>
+                        <div className="control">
+                            <Link
+                                className="button is-success"
+                                to={`/tasks/${id}/${taskContainer?.taskProjection.taskDefinitionKey}/edit`}>
+                                Edit
+                            </Link>
+                        </div>
+                    </div>
+                </Box>}
+        </>
     )
 }
 

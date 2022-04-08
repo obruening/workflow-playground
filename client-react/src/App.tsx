@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AuthProvider from './AuthProvider';
-import FormHookExample from './FormHookExample';
 import Layout from './Layout';
 import LoginPage from './LoginPage';
 import Menu from './Menu';
@@ -27,7 +26,6 @@ function App() {
               <Route path="public" element={<PublicPage />} />
               <Route element={<RequireAuth />} >
                 <Route index element={<TasksPage />} />
-                <Route path="form" element={<FormHookExample />} />
                 <Route path="workflow" element={<Workflow />} />
                 <Route path="tasks/:id/erfassung/edit" element={<ErfassungEdit />} />
                 <Route path="tasks/:id/erfassung" element={<ErfassungReadOnly />} />
