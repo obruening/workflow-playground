@@ -1,8 +1,8 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate, Location } from "react-router-dom";
+import { Location, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./authContext";
 import { User } from "./model/user/user";
+import ErrorBox from "./page/task/ErrorBox";
+import useFetch from "./useFetch";
 import UserList from "./UserList";
 
 /*
@@ -38,17 +38,11 @@ function LoginPage() {
   console.log(location);
   let auth = useAuth();
 
-  const [userList, setUserList] = useState<Array<User>>([]);
+  //const [userList, setUserList] = useState<Array<User>>([]);
 
-  useEffect(() => {
+  //https://github.com/axios/axios#handling-errors
 
-    axios.get<Array<User>>('/api/users')
-      .then(response => {
-        console.log(response.data);
-        setUserList(response.data);
-      })
-  }, []);
-
+  const { error, isPending, data: userList } = useFetch<Array<User>>('/api/users', auth.user?.id || '');
 
   //setUserListProps({userListKey: userList});
   //let from = location.state?.from?.pathname || "/";
@@ -91,9 +85,17 @@ function LoginPage() {
 
   return (
     <>
-      <div className="block" style={{"marginTop" : "20px"}}>
-        {userList && <UserList userListKey={userList} callBackFuncKey={callbackFunc} />}
-      </div>
+      {error &&
+        <ErrorBox errorMessageKey={JSON.stringify(error, null, 4)} />
+      }
+      {isPending &&
+        <div>Loading...</div>
+      }
+      {userList &&
+        <div className="block" style={{ "marginTop": "20px" }}>
+          <UserList userListKey={userList} callBackFuncKey={callbackFunc} />
+        </div>
+      }
     </>
   );
 }

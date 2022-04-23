@@ -1,60 +1,46 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { putTaskPayload, useFetchError } from "../../../apiOperations";
 import { useAuth } from "../../../authContext";
 import { Order } from "../../../model/task/order";
 import { TaskContainer } from "../../../model/task/taskContainer";
-import ErfassungForm from "./ErfassungForm";
-import Header from "../Header";
-import { useNavigate } from "react-router-dom";
+import { Command } from "../Command";
 import ErrorBox from "../ErrorBox";
-import Box from "../../../Box";
+import Header from "../Header";
+import ErfassungForm from "./ErfassungForm";
+
 
 function ErfassungEdit() {
 
     const { id } = useParams();
-
-    const [taskContainer, setTaskContainer] = useState<TaskContainer>();
     const auth = useAuth();
     const navigate = useNavigate();
-    const error = true;
+    const [ error, setError ] = useState<string | null>(null);
 
-    const onSubmit: SubmitHandler<Order> = order => {
+    const commandList: Array<Command> = [{buttonLabel: 'Complete Task', name: 'complete', options: {decision: "yes"}},
+                                         {buttonLabel: 'Super Complete Task', name: 'super',  options: {decision: "no"}}];
 
+    const { isPending, data: taskContainer } = useFetchError<TaskContainer>(`/api/tasks/${id}`, auth.user?.id || '', setError);
+
+    const onSubmit: SubmitHandler<Order> = (order, event) => {
+
+        const command = commandList.find(command => command.name === event?.target.name);
+        order = {...order, ...command?.options};
         const taskPayload = { id: taskContainer?.taskProjection.id, order: order }
-        console.log(taskPayload);
 
-
-        axios.put<Order>('/api/tasks', taskPayload, { headers: { "Fake-User": auth.user?.id || '' } })
-            .then(response => {
-                console.log(response.data);
-                navigate('/success');
-            });
+        putTaskPayload(taskPayload, auth.user?.id || '', setError);
     }
-
-    useEffect(() => {
-
-        axios.get<TaskContainer>(`/api/tasks/${id}`, { headers: { "Fake-User": auth.user?.id || '' } })
-            .then(response => {
-                setTaskContainer(response.data);
-                console.log(response.data);
-            })
-    }, [auth, id]);
 
 
     return (
         <>
             {taskContainer?.taskProjection && <Header taskKey={taskContainer?.taskProjection} />}
-
-            {/*
             {error && <ErrorBox errorMessageKey="Ich bin ein Fehler !" />}
-            */}
-            
-            {taskContainer?.order && <ErfassungForm order={taskContainer?.order} onSubmitFunc={onSubmit} />}
-
+            {taskContainer?.order && <ErfassungForm order={taskContainer?.order} onSubmitFunc={onSubmit} commandList={commandList} />}
         </>
     )
 }
 
 export default ErfassungEdit;
+

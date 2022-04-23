@@ -2,18 +2,11 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Box from "../../../Box";
 import { Order } from "../../../model/task/order";
 import ButtonBar from "../ButtonBar";
+import { Command } from "../Command";
 import ItemsForm from "../form/ItemsForm";
 import OrderForm from "../form/OrderForm";
 
-
-// https://codesandbox.io/s/ji8fv?file=/src/App.tsx
-
 function ErfassungForm(erfassungFormProps: ErfassungFormProps) {
-
-    //let auth = useAuth();
-
-    //const [formData, setFormData] = React.useState<Inputs>({ example: "example", exampleRequired: "exampleRequired", books: [{ title: "xtitle", author: "xauthor" }] });
-    //const [formData, setFormData] = React.useState<Order>();
 
     let formData = erfassungFormProps.order;
 
@@ -21,10 +14,10 @@ function ErfassungForm(erfassungFormProps: ErfassungFormProps) {
 
     return (
         <>
-            <form onSubmit={handleSubmit(erfassungFormProps.onSubmitFunc)}>
+            <form>
                 <OrderForm register={register} control={control} formState={formState} />
                 <ItemsForm register={register} control={control} formState={formState} />
-                <ButtonBar />
+                <ButtonBar handleSubmit={handleSubmit} commandList={erfassungFormProps.commandList} onSubmitFunc={erfassungFormProps.onSubmitFunc} />
             </form>
         </>
     );
@@ -33,6 +26,7 @@ function ErfassungForm(erfassungFormProps: ErfassungFormProps) {
 export type ErfassungFormProps = {
     order?: Order;
     onSubmitFunc: SubmitHandler<Order>;
+    commandList: Array<Command>;
 }
 
 export default ErfassungForm;

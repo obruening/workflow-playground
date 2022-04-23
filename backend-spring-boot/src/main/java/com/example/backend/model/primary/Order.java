@@ -31,6 +31,8 @@ public class Order {
     private String description;
 
     private Long customerId;
+    
+    private String decision;
 
     @OneToMany(cascade = { CascadeType.ALL }, mappedBy = "order", orphanRemoval = true)
     @OrderBy("id asc")
@@ -69,6 +71,14 @@ public class Order {
         this.itemList = itemList;
     }
 
+    public String getDecision() {
+        return decision;
+    }
+
+    public void setDecision(String decision) {
+        this.decision = decision;
+    }
+    
     @Override
     public String toString() {
 

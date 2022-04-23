@@ -28,6 +28,12 @@ public class UserService {
 				.asc()
 				.list();
 		
+		/*
+		if (true) {
+		    throw new IllegalArgumentException("das ist eine Nullpointer Exception");
+		}
+		*/
+		
 		return camundUserList
 				.stream()
 				.map(camundaUser -> mapCamundaUserToUser(camundaUser))

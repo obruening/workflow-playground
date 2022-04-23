@@ -5,6 +5,7 @@ export interface Order {
     description: string;
     customerId: number;
     itemList: Array<Item>;
+    decision: string;
 }
 
 //bla

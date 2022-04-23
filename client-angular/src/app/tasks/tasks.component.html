@@ -1,0 +1,26 @@
+<table class="table is-striped is-fullwidth">
+    <thead>
+        <tr>
+            <th>ProcInstId</th>
+            <th>TaskName</th>
+            <th>Assignee</th>
+            <th>CreateTime</th>
+            <th>Action</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr *ngFor="let task of tasks$ | async">
+            <td>{{ task.processInstanceId }}</td>
+            <td>{{ task.name }}</td>
+            <td>{{ task.assignee }}</td>
+            <td>{{ task.createTime }}</td>
+            <td>
+                <a [routerLink]="['/layout', 'tasks', task.id]">Show</a> |
+                <a [routerLink]="['/layout', 'tasks', task.id, task.taskDefinitionKey, 'edit']">
+                    Edit
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>

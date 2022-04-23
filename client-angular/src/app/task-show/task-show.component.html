@@ -1,0 +1,53 @@
+<div *ngIf="taskContainer$ | async as taskContainer">
+    <app-task-header [task]="taskContainer.taskProjection"></app-task-header>
+
+    <app-box>
+        <div class="content">
+            <h4>Order</h4>
+
+            <p>
+                <strong>Description</strong><br />
+                {{ taskContainer.order.description }}
+            </p>
+            <p>
+                <strong>Customer Id</strong><br />
+                {{ taskContainer.order.customerId }}
+            </p>
+        </div>
+    </app-box>
+
+    <app-box>
+        <div class="content">
+            <h4>Items</h4>
+        </div>
+
+        <table class="table is-striped is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Product Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of taskContainer.order.itemList">
+                    <td>{{ item.productName }}</td>
+                    <td>{{ item.productNumber }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </app-box>
+
+    <app-box>
+        <div class="field is-grouped">
+            <div class="control">
+                <a [routerLink]="['/layout', 'tasks']" class="button is-link">Back</a>
+            </div>
+            <div class="control">
+                <a [routerLink]="['/layout', 'tasks', taskContainer.taskProjection.id, taskContainer.taskProjection.taskDefinitionKey, 'edit']"
+                    class="button is-success">
+                    Edit
+                </a>
+            </div>
+        </div>
+    </app-box>
+</div>

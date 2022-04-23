@@ -56,7 +56,7 @@ public class WorkflowService {
 
         taskService.setAssignee(task.getId(), user);
 
-        return new CreateResult(task.getId(), task.getName());
+        return new CreateResult(task.getId(), task.getTaskDefinitionKey());
 
     }
 

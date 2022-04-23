@@ -3,12 +3,12 @@ package com.example.backend.dto;
 public class CreateResult {
 
     private String taskId;
-    private String taskName;
+    private String taskDefinitionKey;
 
-    public CreateResult(String taskId, String taskName) {
+    public CreateResult(String taskId, String taskDefinitionKey) {
 
         this.taskId = taskId;
-        this.taskName = taskName;
+        this.taskDefinitionKey = taskDefinitionKey;
     }
 
     public String getTaskId() {
@@ -19,11 +19,11 @@ public class CreateResult {
         this.taskId = taskId;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public String getTaskDefinitionKey() {
+        return taskDefinitionKey;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
+    public void setTaskDefinitionKey(String taskDefinitionKey) {
+        this.taskDefinitionKey = taskDefinitionKey;
     }
 }

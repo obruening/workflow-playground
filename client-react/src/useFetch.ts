@@ -1,29 +1,20 @@
 import { useState, useEffect } from 'react';
 
-
-const useFetch = <Data> (url: string, userId: string) => {
+const useFetch = <Data> (url: string, userId: string, options?: {}) => {
   const [data, setData] = useState<Data | null>(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const abortCont = new AbortController();
-
-    setTimeout(() => {
+    
       fetch(url, { signal: abortCont.signal, headers: {"Fake-User": userId} })
-      .then(res => {
-        if (!res.ok) { // error coming back from server
-          //throw Error('could not fetch the data for that resource');
+      .then(response => {
+        if (!response.ok) {
           
-          return res.json().then(r => {
-              
-              //console.log(r);
-              throw new Error(JSON.stringify(r))})
-              
-          
-           
+          return response.json().then(r => { throw new Error(JSON.stringify(r)) })
         } 
-        return res.json();
+        return response.json();
       })
       .then((data: Data) => {
         setIsPending(false);
@@ -43,8 +34,7 @@ const useFetch = <Data> (url: string, userId: string) => {
           setError(JSON.parse(err.message));
         }
       })
-    }, 0);
-
+    
     // abort the fetch
     return () => abortCont.abort();
   }, [url, userId])

@@ -1,0 +1,19 @@
+<ng-container *ngIf="isAuthenticated$ | async; else notLoggedIn">
+
+    <ng-container *ngIf="userChanged$ | async as user">
+        <div class="navbar-item">
+            {{ user.firstname }} {{ user.lastname }}
+        </div>
+        <div class="navbar-item">
+            <button (click)="logout()" class="button is-success">
+                Sign out
+            </button>
+        </div>
+    </ng-container>
+</ng-container>
+
+<ng-template #notLoggedIn>
+    <div class="navbar-item">
+        Not signed in
+    </div>
+</ng-template>

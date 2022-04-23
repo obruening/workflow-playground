@@ -1,0 +1,23 @@
+<div class="columns">
+    <div class="column is-one-third is-offset-one-third is-centered">
+
+        <div class="block" *ngFor="let user of users$ | async">
+            <div class="card">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4">{{ user.firstname }} {{ user.lastname }}</p>
+                            <p class="subtitle is-6">Id: {{ user.id }}</p>
+                        </div>
+                        <div class="media-right">
+                            <button (click)="loginAs(user)" class="button is-success">Login</button>
+                        </div>
+                    </div>
+                    <div class="content">
+                        Groups: {{ joinedGroupNames(user.groupList) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

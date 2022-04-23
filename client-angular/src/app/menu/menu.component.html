@@ -1,0 +1,23 @@
+<div class="columns">
+    <div class="column is-three-fifths is-offset-one-fifth">
+        <div class="tabs is-centered" style="padding-top: 20px">
+            <ul>
+                <li [ngClass]="rlaWorkflow.isActive == true ? 'is-active' : ''">
+                    <a routerLink="workflow" routerLinkActive #rlaWorkflow="routerLinkActive">Workflow</a>
+                </li>
+                <li [ngClass]="rlaTasks.isActive == true ? 'is-active' : ''">
+                    <a routerLink="tasks" routerLinkActive #rlaTasks="routerLinkActive">Tasks</a>
+                </li>
+                <li [ngClass]="rlaProcessinstances.isActive == true ? 'is-active' : ''">
+                    <a routerLink="processinstances" routerLinkActive #rlaProcessinstances="routerLinkActive">Process Instances</a>
+                </li>
+                <li [ngClass]="rlaLogin.isActive == true ? 'is-active' : ''">
+                    <a routerLink="login" routerLinkActive #rlaLogin="routerLinkActive">Login</a>
+                </li>
+
+            </ul>
+        </div>
+
+        <router-outlet></router-outlet>
+    </div>
+</div>
