@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.camunda.bpm.engine.history.HistoricProcessInstance;
+
 public class ProcessinstanceProjection {
 
     private String id;
@@ -43,6 +45,16 @@ public class ProcessinstanceProjection {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+    
+    public static ProcessinstanceProjection mapToProcessInstanceProjection(HistoricProcessInstance historicProcessInstance) {
+        
+        ProcessinstanceProjection processinstanceProjection = new ProcessinstanceProjection();
+        processinstanceProjection.setId(historicProcessInstance.getId());
+        processinstanceProjection.setStartTime(historicProcessInstance.getStartTime());
+        processinstanceProjection.setEndTime(historicProcessInstance.getEndTime());
+
+        return processinstanceProjection;
     }
 
 }

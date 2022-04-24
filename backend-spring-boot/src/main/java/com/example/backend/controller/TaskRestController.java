@@ -1,7 +1,6 @@
 package com.example.backend.controller;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.camunda.bpm.engine.RepositoryService;
@@ -24,13 +23,13 @@ import com.example.backend.User;
 import com.example.backend.dto.TaskContainer;
 import com.example.backend.dto.TaskPayload;
 import com.example.backend.dto.TaskProjection;
-import com.example.backend.model.primary.Order;
-import com.example.backend.service.primary.UserService;
-import com.example.backend.service.primary.WorkflowService;
+import com.example.backend.model.Order;
+import com.example.backend.service.TaskApiService;
+import com.example.backend.service.UserService;
 
 @RestController
 @RequestMapping(value = "/api/tasks")
-public class TaskRestController {
+public class TaskRestController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(TaskRestController.class);
 
@@ -41,12 +40,7 @@ public class TaskRestController {
     private RepositoryService repositoryService;
 
     @Autowired
-    private WorkflowService workflowService;
-
-    /*
-    @Autowired
-    private List<User> userList;
-    */
+    private TaskApiService taskApiService;
     
     @Autowired
     private UserService userService;
@@ -54,21 +48,12 @@ public class TaskRestController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> tasks(@RequestHeader(name = "Fake-User", required = false) String fakeUser) {
 
-        logger.info(fakeUser);
-
-        if (fakeUser != null) {
-            //return new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
-            throw new NullPointerException("bla");
+        if (fakeUser == null) {
+            return getUnautorizedResposeEntity();
         }
 
         User user = userService.getUser(fakeUser);
         List<String> groupList = user.getGroupList().stream().map(g -> g.getName()).collect(Collectors.toList());
-        
-        /*
-        Optional<User> optionalUser = userList.stream().filter(u -> u.getId().equals(fakeUser)).findFirst();
-        User user = optionalUser.get();
-        List<String> groupList = user.getGroupList().stream().map(g -> g.getName()).collect(Collectors.toList());
-         */
 
         List<Task> tasks = taskService
         		.createTaskQuery()
@@ -80,20 +65,11 @@ public class TaskRestController {
                 .orderByTaskCreateTime()
                 .desc()
                 .list();
-        // List<Task> tasks =
-        // taskService.createTaskQuery().orderByTaskCreateTime().desc().list();
 
-        List<TaskProjection> taskProjectionList = tasks.stream().map(task -> {
-            TaskProjection taskProjection = new TaskProjection();
-            taskProjection.setId(task.getId());
-            taskProjection.setTaskDefinitionKey(task.getTaskDefinitionKey());
-            taskProjection.setName(task.getName());
-            taskProjection.setAssignee(task.getAssignee());
-            taskProjection.setProcessInstanceId(task.getProcessInstanceId());
-            taskProjection.setCreateTime(task.getCreateTime());
-
-            return taskProjection;
-        }).collect(Collectors.toList());
+        List<TaskProjection> taskProjectionList = tasks
+                .stream()
+                .map(TaskProjection::mapToTaskProjection)
+                .collect(Collectors.toList());
 
         return new ResponseEntity<List<TaskProjection>>(taskProjectionList, HttpStatus.OK);
     }
@@ -101,30 +77,22 @@ public class TaskRestController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> task(@PathVariable("id") String id,
             @RequestHeader(name = "Fake-User", required = false) String fakeUser) {
-
-        logger.info(fakeUser);
-
+        
         if (fakeUser == null) {
-            return new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
+            return getUnautorizedResposeEntity();
         }
 
         Task task = taskService.createTaskQuery().taskId(id).singleResult();
-
-        Map<String, Object> variables = taskService.getVariables(task.getId());
-        logger.info(variables.toString());
+        TaskProjection taskProjection = TaskProjection.mapToTaskProjection(task);
+        
 
         Order order = (Order) taskService.getVariable(task.getId(), "order");
 
-        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
-                .processDefinitionId(task.getProcessDefinitionId()).singleResult();
+        ProcessDefinition processDefinition = repositoryService
+                .createProcessDefinitionQuery()
+                .processDefinitionId(task.getProcessDefinitionId())
+                .singleResult();
 
-        TaskProjection taskProjection = new TaskProjection();
-        taskProjection.setId(task.getId());
-        taskProjection.setTaskDefinitionKey(task.getTaskDefinitionKey());
-        taskProjection.setName(task.getName());
-        taskProjection.setAssignee(task.getAssignee());
-        taskProjection.setProcessInstanceId(task.getProcessInstanceId());
-        taskProjection.setCreateTime(task.getCreateTime());
         taskProjection.setProcessDefinitionName(processDefinition.getName());
 
         TaskContainer taskContainer = new TaskContainer(taskProjection, order);
@@ -135,10 +103,13 @@ public class TaskRestController {
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<?> complete(@RequestBody TaskPayload taskPayload,
             @RequestHeader(name = "Fake-User", required = false) String fakeUser) {
+        
+        if (fakeUser == null) {
+            return new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
+        }
 
-        workflowService.complete(taskPayload);
+        taskApiService.complete(taskPayload);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }

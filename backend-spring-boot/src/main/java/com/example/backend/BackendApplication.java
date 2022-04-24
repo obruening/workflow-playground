@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.backend.service.primary.WorkflowService;
+import com.example.backend.service.WorkflowService;
 
 @SpringBootApplication
 public class BackendApplication implements CommandLineRunner {
@@ -28,7 +28,7 @@ public class BackendApplication implements CommandLineRunner {
         // create 10 processinstances started by anna
         for (int i = 0; i < 10; i++) {
 
-            workflowService.create("anna");
+            workflowService.createDemoProcessInstance("anna");
         }
     }
 }

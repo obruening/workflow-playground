@@ -1,6 +1,6 @@
 package com.example.backend.dto;
 
-import com.example.backend.model.primary.Order;
+import com.example.backend.model.Order;
 
 public class TaskPayload {
 

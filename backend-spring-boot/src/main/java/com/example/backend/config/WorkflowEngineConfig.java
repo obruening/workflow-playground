@@ -28,15 +28,12 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class WorkflowEngineConfig {
 
     @Autowired
-    @Qualifier("primaryDataSource")
     public DataSource dataSource;
 
     @Autowired
-    @Qualifier("primaryTransactionManager")
     public JpaTransactionManager transactionManager;
 
     @Autowired
-    @Qualifier("primaryEntityManagerFactory")
     public EntityManagerFactory entityManagerFactory;
 
     @Autowired

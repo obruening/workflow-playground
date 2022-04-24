@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.camunda.bpm.engine.task.Task;
+
 public class TaskProjection {
 
     private String id;
@@ -69,5 +71,18 @@ public class TaskProjection {
 
     public void setProcessDefinitionName(String processDefinitionName) {
         this.processDefinitionName = processDefinitionName;
+    }
+    
+    public static TaskProjection mapToTaskProjection(Task task) {
+        
+        TaskProjection taskProjection = new TaskProjection();
+        taskProjection.setId(task.getId());
+        taskProjection.setTaskDefinitionKey(task.getTaskDefinitionKey());
+        taskProjection.setName(task.getName());
+        taskProjection.setAssignee(task.getAssignee());
+        taskProjection.setProcessInstanceId(task.getProcessInstanceId());
+        taskProjection.setCreateTime(task.getCreateTime());
+        
+        return taskProjection;
     }
 }

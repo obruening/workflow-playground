@@ -17,14 +17,17 @@ import com.example.backend.dto.ProcessinstanceProjection;
 
 @RestController
 @RequestMapping(value = "/api/processinstances")
-public class ProcessinstanceRestController {
+public class ProcessinstanceRestController extends BaseController {
     
     @Autowired
     private HistoryService historyService;
     
-
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> processinstances(@RequestHeader(name = "Fake-User", required = false) String fakeUser) {
+        
+        if (fakeUser == null) {
+            return getUnautorizedResposeEntity();
+        }
         
         List<HistoricProcessInstance> processinstances = historyService
             .createHistoricProcessInstanceQuery()
@@ -32,16 +35,12 @@ public class ProcessinstanceRestController {
             .desc()
             .list();
         
-        List<ProcessinstanceProjection> processinstanceProjectionList = processinstances.stream().map(processinstance -> {
-            ProcessinstanceProjection processinstanceProjection = new ProcessinstanceProjection();
-            processinstanceProjection.setId(processinstance.getId());
-            processinstanceProjection.setStartTime(processinstance.getStartTime());
-            processinstanceProjection.setEndTime(processinstance.getEndTime());
-
-            return processinstanceProjection;
-        }).collect(Collectors.toList());
-
+        List<ProcessinstanceProjection> processinstanceProjectionList = processinstances
+                .stream()
+                .map(ProcessinstanceProjection::mapToProcessInstanceProjection)
+                .collect(Collectors.toList());
         
         return new ResponseEntity<List<ProcessinstanceProjection>>(processinstanceProjectionList, HttpStatus.OK);
     }
+    
 }

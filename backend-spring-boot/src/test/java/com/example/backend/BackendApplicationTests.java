@@ -15,9 +15,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 
-import com.example.backend.model.primary.Item;
-import com.example.backend.model.primary.Order;
-import com.example.backend.service.primary.ItemService;
+import com.example.backend.model.Item;
+import com.example.backend.model.Order;
+import com.example.backend.service.ItemService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)

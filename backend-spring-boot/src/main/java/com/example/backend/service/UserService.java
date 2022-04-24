@@ -1,4 +1,4 @@
-package com.example.backend.service.primary;
+package com.example.backend.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,11 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.backend.Group;
 import com.example.backend.User;
 
 @Service
+@Transactional
 public class UserService {
 	
 	private static Logger logger = LoggerFactory.getLogger(UserService.class);
