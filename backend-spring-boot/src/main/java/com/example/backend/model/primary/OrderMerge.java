@@ -15,6 +15,7 @@ public class OrderMerge {
 
         persistedOrder.setCustomerId(order.getCustomerId());
         persistedOrder.setDescription(order.getDescription());
+        persistedOrder.setDecision(order.getDecision());
         return persistedOrder;
     }
 

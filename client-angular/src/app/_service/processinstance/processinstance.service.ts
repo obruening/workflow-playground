@@ -1,21 +1,21 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Constants } from 'src/app/_constants/constants';
-import { CreateResult } from '../../_model/task/createResult';
+import { Processinstance } from 'src/app/_model/processinstance/processinstance';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class WorkflowService {
+export class ProcessinstanceService {
 
-  workflowServiceUrl = Constants.apiServer + '/workflows';
+  processinstancesServiceUrl = Constants.apiServer + '/processinstances';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  create() {
+  getProcessinstances() {
 
     const headers = new HttpHeaders({"Fake-User": this.authService.getUserName()});
-    return this.http.post<CreateResult>(this.workflowServiceUrl, null, {headers: headers});
+    return this.http.get<Array<Processinstance>>(this.processinstancesServiceUrl, {headers: headers});
   }
 }

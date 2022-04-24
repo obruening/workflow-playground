@@ -1,4 +1,4 @@
-<div class="columns">
+<div class="columns" *ngIf="isAuthenticated$ | async">
     <div class="column is-three-fifths is-offset-one-fifth">
         <div class="tabs is-centered" style="padding-top: 20px">
             <ul>
@@ -11,13 +11,7 @@
                 <li [ngClass]="rlaProcessinstances.isActive == true ? 'is-active' : ''">
                     <a routerLink="processinstances" routerLinkActive #rlaProcessinstances="routerLinkActive">Process Instances</a>
                 </li>
-                <li [ngClass]="rlaLogin.isActive == true ? 'is-active' : ''">
-                    <a routerLink="login" routerLinkActive #rlaLogin="routerLinkActive">Login</a>
-                </li>
-
             </ul>
         </div>
-
-        <router-outlet></router-outlet>
     </div>
 </div>

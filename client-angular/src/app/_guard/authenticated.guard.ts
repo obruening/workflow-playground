@@ -15,7 +15,7 @@ export class AuthenticatedGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    const loginRoute = this.router.createUrlTree(['/layout', 'login']);
+    const loginRoute = this.router.createUrlTree(['/login']);
     return this.authService.getIsAuthenticated().pipe(map(b => b || loginRoute));
   }
 

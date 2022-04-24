@@ -16,7 +16,7 @@ export class TaskShowComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private taskService: TaskService) {
 
-    const id = route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
     this.taskContainer$ = taskService.getTask(id || '');
   }
 

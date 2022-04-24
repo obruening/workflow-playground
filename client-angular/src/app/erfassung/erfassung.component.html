@@ -1,80 +1,86 @@
-<form [formGroup]="orderFormGroup" *ngIf="loaded">
-    <app-box>
-        <div class="content">
-            <h4 class="h4">Order</h4>
-        </div>
+<ng-container *ngIf="loaded === true">
 
-        <div class="field">
-            <label class="label" for="description">Description</label>
-            <div class="control">
-                <input id="description" style="width: 70%" class="input" formControlName="description" />
+    <app-task-header [task]="taskContainer?.taskProjection"></app-task-header>
+
+    <form [formGroup]="orderFormGroup" *ngIf="loaded">
+        <app-box>
+            <div class="content">
+                <h4 class="h4">Order</h4>
             </div>
-        </div>
 
-        <div class="field">
-            <label class="label" for="customerId">Customer Id</label>
-            <div class="control">
-                <input id="customerId" style="width: 70%" class="input" formControlName="customerId">
-            </div>
-            <p class="help is-danger">This field is required</p>
-        </div>
-    </app-box>
-
-    <app-box>
-        <div class="content">
-            <h4 class="h4">Items</h4>
-        </div>
-
-        <div className="field is-grouped" style="margin-bottom: 10px">
-            <button class="button is-link is-light" (click)="addItem()">
-                Add Item
-            </button>
-        </div>
-
-        <div formArrayName="itemList">
-            <ng-container *ngFor="let itemControlGroup of itemControlsArray; let i=index">
-                <div class="field is-grouped" [formGroup]="itemControlGroup">
-                    <div class="control">
-                        <label *ngIf="i === 0" class="label">Name</label>
-                        <input type="text" class="input" formControlName="productName" />
-                    </div>
-
-                    <div class="control">
-                        <label *ngIf="i === 0" class="label">Number</label>
-                        <input type="text" class="input" formControlName="productNumber" />
-                    </div>
-
-                    <p class="control">
-                        <label *ngIf="i === 0" class="label has-text-centered">Action</label>
-                        <button class="button is-link is-light" (click)="deleteItem(i)">
-                            Delete
-                        </button>
-                    </p>
+            <div class="field">
+                <label class="label" for="description">Description</label>
+                <div class="control">
+                    <input id="description" style="width: 70%" class="input" formControlName="description" />
                 </div>
-            </ng-container>
-        </div>
-    </app-box>
-
-    <app-box>
-        <div class="field is-grouped">
-            <div class="control">
-                <a [routerLink]="['/layout', 'tasks']" class="button is-link">Cancel</a>
             </div>
-            <div class="control">
-                <button (click)="handleSubmit('Send')" class="button is-success">
-                    Send
+
+            <div class="field">
+                <label class="label" for="customerId">Customer Id</label>
+                <div class="control">
+                    <input id="customerId" style="width: 70%" class="input" formControlName="customerId">
+                </div>
+                <p class="help is-danger">This field is required</p>
+            </div>
+        </app-box>
+
+        <app-box>
+            <div class="content">
+                <h4 class="h4">Items</h4>
+            </div>
+
+            <div className="field is-grouped" style="margin-bottom: 10px">
+                <button class="button is-link is-light" (click)="addItem()">
+                    Add Item
                 </button>
             </div>
-            <div class="control">
-                <button (click)="handleSubmit('SuperSend')" class="button is-success">
-                    SuperSend
-                </button>
-            </div>
-        </div>
-    </app-box>
-</form>
 
-<p>
-    Value:
-</p>
-<pre>{{ orderFormGroup.value | json }}</pre>
+            <div formArrayName="itemList">
+                <ng-container *ngFor="let itemControlGroup of itemControlsArray; let i=index">
+                    <div class="field is-grouped" [formGroup]="itemControlGroup">
+                        <div class="control">
+                            <label *ngIf="i === 0" class="label">Name</label>
+                            <input type="text" class="input" formControlName="productName" />
+                        </div>
+
+                        <div class="control">
+                            <label *ngIf="i === 0" class="label">Number</label>
+                            <input type="text" class="input" formControlName="productNumber" />
+                        </div>
+
+                        <p class="control">
+                            <label *ngIf="i === 0" class="label has-text-centered">Action</label>
+                            <button class="button is-link is-light" (click)="deleteItem(i)">
+                                Delete
+                            </button>
+                        </p>
+                    </div>
+                </ng-container>
+            </div>
+        </app-box>
+
+        <app-box>
+            <div class="field is-grouped">
+                <div class="control">
+                    <a [routerLink]="['/tasks']" class="button is-link">Cancel</a>
+                </div>
+                <div class="control">
+                    <button (click)="handleSubmit('Send')" class="button is-success">
+                        Send
+                    </button>
+                </div>
+                <div class="control">
+                    <button (click)="handleSubmit('SuperSend')" class="button is-success">
+                        SuperSend
+                    </button>
+                </div>
+            </div>
+        </app-box>
+    </form>
+
+    <p>
+        Value:
+    </p>
+    <pre>{{ orderFormGroup.value | json }}</pre>
+
+</ng-container>

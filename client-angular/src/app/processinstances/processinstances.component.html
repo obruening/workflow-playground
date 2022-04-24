@@ -1,1 +1,21 @@
-<p>processinstances works!</p>
+<table class="table is-striped is-fullwidth">
+    <thead>
+        <tr>
+            <th>ProcInstId</th>
+            <th>StartTime</th>
+            <th>EndTime</th>
+            <th>Action</th>
+        </tr>
+
+    </thead>
+    <tbody>
+        <tr *ngFor="let processinstance of processinstances$ | async">
+            <td>{{ processinstance.id }}</td>
+            <td>{{ processinstance.startTime }}</td>
+            <td>{{ processinstance.endTime }}</td>
+            <td>
+                <a [routerLink]="['/processinstances', processinstance.id]">Show</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

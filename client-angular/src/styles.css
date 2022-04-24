@@ -2,7 +2,10 @@
 @import 'bulma/css/bulma.css';
 
 .box {
-    background-color: #fafafa;
-    /*background-color: gainsboro;*/
-  }
-  
+  background-color: #fafafa;
+  /*background-color: gainsboro;*/
+}
+
+.tabs li {
+  font-weight: 600;
+}

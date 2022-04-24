@@ -14,10 +14,15 @@
                     Documentation
                 </a>
             </div>
-            <div class="navbar-end" app-auth-status></div>    
+            <div class="navbar-end" app-auth-status></div>
         </div>
     </nav>
 
     <app-menu></app-menu>
-    <!--<Outlet />-->
+
+    <div class="columns">
+        <div class="column is-three-fifths is-offset-one-fifth">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
 </div>

@@ -7,5 +7,3 @@ export interface Order {
     itemList: Array<Item>;
     decision: string;
 }
-
-//bla

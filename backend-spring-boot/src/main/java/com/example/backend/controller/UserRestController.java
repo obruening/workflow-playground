@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.User;
-import com.example.backend.UserService;
+import com.example.backend.service.primary.UserService;
 
 @RestController
 @RequestMapping(value = "/api/users")

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Processinstance } from '../_model/processinstance/processinstance';
+import { ProcessinstanceService } from '../_service/processinstance/processinstance.service';
 
 @Component({
   selector: 'app-processinstances',
@@ -7,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProcessinstancesComponent implements OnInit {
 
-  constructor() { }
+  processinstances$: Observable<Array<Processinstance>>;
 
-  ngOnInit(): void {
+  constructor(private processinstanceService: ProcessinstanceService) {
+    this.processinstances$ = this.processinstanceService.getProcessinstances();
   }
 
+  ngOnInit(): void { }
 }

@@ -17,10 +17,8 @@ export class AuthService {
 
   setUser(user: User | null): void {
 
-    console.log(user);
-
     if (user !== this.user) {
-      console.log("next");
+
       this.user = user;
       this.userChanged$.next(this.user);
     }
@@ -41,10 +39,6 @@ export class AuthService {
 
   getUserName(): string {
 
-    if (this.user !== null) {
-      return this.user.firstname + " " + this.user.lastname;
-    } else {
-      return 'Not logged in';
-    }
+    return this.user !== null ? this.user.id : '';
   }
 }

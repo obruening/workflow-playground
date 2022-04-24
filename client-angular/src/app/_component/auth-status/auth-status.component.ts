@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from '../_service/auth/auth.service';
-import { User } from '../_model/user/user';
+import { AuthService } from '../../_service/auth/auth.service';
+import { User } from '../../_model/user/user';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,7 +25,7 @@ export class AuthStatusComponent implements OnInit {
 
   logout() {
     this.authService.setUser(null);
-    this.router.navigate(['/layout', 'login']);
+    this.router.navigate(['login']);
   }
 
 }

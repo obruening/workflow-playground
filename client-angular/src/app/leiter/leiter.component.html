@@ -1,4 +1,4 @@
-<div *ngIf="taskContainer$ | async as taskContainer">
+<div *ngIf="taskContainer !== null">
     <app-task-header [task]="taskContainer.taskProjection"></app-task-header>
 
     <app-box>
@@ -44,13 +44,18 @@
     <app-box>
         <div class="field is-grouped">
             <div class="control">
-                <a [routerLink]="['/tasks']" class="button is-link">Back</a>
+                <a [routerLink]="['/tasks']" class="button is-link">Cancel</a>
             </div>
             <div class="control">
-                <a [routerLink]="['/tasks', taskContainer.taskProjection.id, taskContainer.taskProjection.taskDefinitionKey, 'edit']"
-                    class="button is-success">
-                    Edit
-                </a>
+
+                <button (click)="handleSubmit('approve')" class="button is-success">
+                    Approve
+                </button>
+            </div>
+            <div class="control">
+                <button (click)="handleSubmit('disapprove')" class="button is-success">
+                    Disapprove
+                </button>
             </div>
         </div>
     </app-box>

@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
 
 import com.example.backend.service.primary.WorkflowService;
 
 @SpringBootApplication
-@EnableCaching
 public class BackendApplication implements CommandLineRunner {
 
     @Autowired
@@ -27,6 +25,7 @@ public class BackendApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        // create 10 processinstances started by anna
         for (int i = 0; i < 10; i++) {
 
             workflowService.create("anna");

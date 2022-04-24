@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend.User;
-import com.example.backend.UserService;
 import com.example.backend.dto.TaskContainer;
 import com.example.backend.dto.TaskPayload;
 import com.example.backend.dto.TaskProjection;
 import com.example.backend.model.primary.Order;
+import com.example.backend.service.primary.UserService;
 import com.example.backend.service.primary.WorkflowService;
 
 @RestController
@@ -56,8 +56,9 @@ public class TaskRestController {
 
         logger.info(fakeUser);
 
-        if (fakeUser == null) {
-            return new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
+        if (fakeUser != null) {
+            //return new ResponseEntity<String>("Unauthorized", HttpStatus.UNAUTHORIZED);
+            throw new NullPointerException("bla");
         }
 
         User user = userService.getUser(fakeUser);

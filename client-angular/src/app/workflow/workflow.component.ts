@@ -17,7 +17,7 @@ export class WorkflowComponent implements OnInit {
   create() {
 
     this.workflowService.create().subscribe(createResult => {
-      this.router.navigate(['/layout', 'tasks', createResult.taskId, createResult.taskDefinitionKey, 'edit']);
+      this.router.navigate(['tasks', createResult.taskId, createResult.taskDefinitionKey, 'edit']);
     });
   }
 

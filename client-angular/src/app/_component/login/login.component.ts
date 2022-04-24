@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from '../_service/auth/auth.service';
-import { UserService } from '../_service/user/user.service';
-import { Group } from '../_model/user/group';
-import { User } from '../_model/user/user';
+import { AuthService } from '../../_service/auth/auth.service';
+import { UserService } from '../../_service/user/user.service';
+import { Group } from '../../_model/user/group';
+import { User } from '../../_model/user/user';
 import { Router } from '@angular/router';
 
 @Component({
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   public loginAs(user: User): void {
 
     this.authService.setUser(user);
-    this.router.navigate(['/layout/', 'tasks']);
+    this.router.navigate(['tasks']);
   }
 
 }

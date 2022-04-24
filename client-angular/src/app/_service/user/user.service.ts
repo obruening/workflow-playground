@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Constants } from 'src/app/_constants/constants';
 import { User } from '../../_model/user/user';
 
 @Injectable({
@@ -7,7 +8,7 @@ import { User } from '../../_model/user/user';
 })
 export class UserService {
 
-  userServiceUrl = 'http://localhost:4200/api/users';
+  userServiceUrl = Constants.apiServer + '/users';
 
   constructor(private http: HttpClient) { }
 
