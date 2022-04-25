@@ -25,7 +25,6 @@ public class OrderMerge {
         List<Item> persistedItemList = persistedOrder.getItemList();
 
         // items kopieren
-
         List<Item> copyOfPersistedItemList = persistedItemList.stream().map(persistedItem -> {
             Item copyOfPersistedItem = new Item();
             copyOfPersistedItem.setId(persistedItem.getId());
@@ -36,19 +35,14 @@ public class OrderMerge {
         }).collect(Collectors.toList());
 
         // items löschen
-        logger.info("changed: " + persistedOrder.getItemList().removeAll(persistedItemList));
+        persistedOrder.getItemList().removeAll(persistedItemList);
         persistedItemList.forEach(persistedItem -> persistedItem.setOrder(null));
 
-        // logger.info("changed: " + persistedOrder.getItemList().remove(0));
-        // persistedItemList.forEach(persistedItem -> persistedItem.setOrder(null));
-
-        logger.info("size: " + persistedOrder.getItemList().size());
-
+        
         // items hinzufügen
         for (Item item : itemList) {
 
             Optional<Item> optionalCopyOfPersistedItem = copyOfPersistedItemList
-                    // Optional<Item> optionalCopyOfPersistedItem = persistedItemList
                     .stream().filter(copyOfPersistedItem -> copyOfPersistedItem.getId().equals(item.getId()))
                     .findFirst();
 
@@ -66,5 +60,4 @@ public class OrderMerge {
 
         return persistedOrder;
     }
-
 }

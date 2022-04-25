@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthStatusComponent } from './_component/auth-status/auth-status.component';
 import { BoxComponent } from './_component/box/box.component';
-import { ErfassungComponent } from './erfassung/erfassung.component';
+import { CreateorderComponent } from './createorder/createorder.component';
 import { LayoutComponent } from './_component/layout/layout.component';
 import { LoginComponent } from './_component/login/login.component';
 import { MenuComponent } from './_component/menu/menu.component';
@@ -17,7 +17,7 @@ import { TaskShowComponent } from './task-show/task-show.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { WorkflowComponent } from './workflow/workflow.component';
 import { SuccessComponent } from './_component/success/success.component';
-import { LeiterComponent } from './leiter/leiter.component';
+import { ApproveorderComponent } from './approveorder/approveorder.component';
 
 
 @NgModule({
@@ -34,9 +34,9 @@ import { LeiterComponent } from './leiter/leiter.component';
     BoxComponent,
     TaskHeaderComponent,
     LoginComponent,
-    ErfassungComponent,
+    CreateorderComponent,
     SuccessComponent,
-    LeiterComponent
+    ApproveorderComponent
   ],
   imports: [
     BrowserModule,

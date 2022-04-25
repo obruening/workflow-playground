@@ -36,6 +36,7 @@ public class WorkflowService {
         
         Order order = new Order();
         order.setDescription("Demo Order");
+        order.setCustomerId(2222L);
 
         Item item1 = new Item();
         item1.setProductName("First Item");
@@ -53,7 +54,7 @@ public class WorkflowService {
         order = orderService.save(order);
 
         ProcessInstance processInstance = runtimeService
-                .startProcessInstanceByKey("dummy_dummy", Collections.singletonMap("order", order));
+                .startProcessInstanceByKey("order", Collections.singletonMap("order", order));
         
         Task task = taskService
                 .createTaskQuery()
@@ -71,7 +72,7 @@ public class WorkflowService {
         order = orderService.save(order);
 
         ProcessInstance processInstance = runtimeService
-                .startProcessInstanceByKey("dummy_dummy", Collections.singletonMap("order", order));
+                .startProcessInstanceByKey("order", Collections.singletonMap("order", order));
 
         Task task = taskService
                 .createTaskQuery()

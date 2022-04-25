@@ -1,20 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TaskContainer } from '../_model/task/taskContainer';
 import { TaskService } from '../_service/task/task.service';
 
 @Component({
   selector: 'app-erfassung',
-  templateUrl: './erfassung.component.html',
-  styleUrls: ['./erfassung.component.css']
+  templateUrl: './createorder.component.html',
+  styleUrls: ['./createorder.component.css']
 })
-export class ErfassungComponent implements OnInit {
+export class CreateorderComponent implements OnInit {
 
-  //itemList: Array<Item> = [{ id: 123, productName: "item productName", productNumber: 123 }];
-  //order: Order = { description: "order description", customerId: 123, id: 123, decision: "yes", itemList: this.itemList }
-
-  //https://stackoverflow.com/questions/59249154/angular-create-dynamic-reactive-form-after-async-call-asyncpipe
+  //FIXME: https://stackoverflow.com/questions/59249154/angular-create-dynamic-reactive-form-after-async-call-asyncpipe
 
   loaded: boolean = false;
   taskContainer: TaskContainer | null = null;
@@ -32,18 +29,19 @@ export class ErfassungComponent implements OnInit {
 
       this.taskContainer = taskContainer;
 
+      const itemListFormArray: FormArray = this.fb.array(taskContainer.order.itemList.map(item => this.fb.group({
+        id: [item.id],
+        productName: [item.productName, Validators.required],
+        productNumber: [item.productNumber, [Validators.required, Validators.min(0), Validators.max(99999)]]
+      })), Validators.required);
+
+
       this.orderFormGroup = this.fb.group({
         id: [taskContainer.order.id],
-        description: [taskContainer.order.description],
-        customerId: [taskContainer.order.customerId],
+        description: [taskContainer.order.description, Validators.required],
+        customerId: [taskContainer.order.customerId, [Validators.required, Validators.min(0), Validators.max(99999)]],
         decision: [taskContainer.order.decision],
-        itemList: this.fb.array(
-          taskContainer.order.itemList.map(item => this.fb.group({
-            id: item.id,
-            productName: item.productName,
-            productNumber: item.productNumber
-          }))
-        )
+        itemList: itemListFormArray
       });
 
       this.loaded = true;
@@ -81,6 +79,10 @@ export class ErfassungComponent implements OnInit {
 
   handleSubmit(button: string): void {
 
+    if (!this.orderFormGroup.valid) {
+      return;
+    }
+
     const taskPayload = {
       id: this.taskContainer?.taskProjection.id || '-1',
       order: this.orderFormGroup.value
@@ -89,7 +91,10 @@ export class ErfassungComponent implements OnInit {
     this.taskService.putTask(taskPayload).subscribe(data => console.log(data));
 
     this.router.navigate(['/success']);
-    console.log(button);
-    console.log(this.orderFormGroup.value);
   }
+
+  get description() { return this.orderFormGroup.get('description'); }
+  get customerId() { return this.orderFormGroup.get('customerId'); }
+  get itemList() { return this.orderFormGroup.get('itemList'); }
+  
 }

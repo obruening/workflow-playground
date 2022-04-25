@@ -1,19 +1,32 @@
 <div class="columns">
     <div class="column"></div>
-    <div class="column is-three-quarters" >
-        <div class="card is-centered">
-            <div class="card-content">
-                <div class="media">
-                    <div class="media-content">
-                        <p class="title is-4">Workflow "Dummy"</p>
-                        <p class="subtitle is-6">Create a new workflow instance and edit the first user task as an assignee.</p>
-                    </div>
-                    <div class="media-right">
-                        <button (click)="create()" class="button is-success">Start</button>
+    <div class="column is-three-quarters">
+
+        <article class="message is-info"
+            *ngIf="authService.isMemberOfGroup('create_order') == false; else startWorkflowBlock">
+            <div class="message-body">
+                You need to be member of group <strong>"create_order"</strong> to start the "Order" workflow.
+                Try to log in as <strong>Anna</strong>.
+            </div>
+        </article>
+
+        <ng-template #startWorkflowBlock>
+            <div class="card is-centered">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4">"Order" Workflow</p>
+                            <p class="subtitle is-6">Create a new workflow instance and edit the first user task as an
+                                assignee.</p>
+                        </div>
+                        <div class="media-right">
+                            <button (click)="create()" class="button is-success">Start</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </ng-template>
     </div>
+
     <div class="column"></div>
 </div>

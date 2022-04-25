@@ -11,16 +11,18 @@
             <div class="field">
                 <label class="label" for="description">Description</label>
                 <div class="control">
-                    <input id="description" style="width: 70%" class="input" formControlName="description" />
+                    <input type="text" id="description" style="width: 70%" class="input" formControlName="description" />
                 </div>
+                <p class="help is-danger" *ngIf="description?.errors?.['required']">Description is required</p>
             </div>
 
             <div class="field">
                 <label class="label" for="customerId">Customer Id</label>
                 <div class="control">
-                    <input id="customerId" style="width: 70%" class="input" formControlName="customerId">
+                    <input type="number" id="customerId" style="width: 70%" class="input" formControlName="customerId">
                 </div>
-                <p class="help is-danger">This field is required</p>
+                <p class="help is-danger" *ngIf="customerId?.errors?.['required']">CustomerId is required</p>
+                <p class="help is-danger" *ngIf="customerId?.errors?.['min'] || customerId?.errors?.['max']">CustomerId between 0 and 99999</p>
             </div>
         </app-box>
 
@@ -36,16 +38,20 @@
             </div>
 
             <div formArrayName="itemList">
+                <p class="help is-danger" *ngIf="itemList?.errors?.['required']">Add at least 1 Item</p>
+
                 <ng-container *ngFor="let itemControlGroup of itemControlsArray; let i=index">
                     <div class="field is-grouped" [formGroup]="itemControlGroup">
                         <div class="control">
                             <label *ngIf="i === 0" class="label">Name</label>
                             <input type="text" class="input" formControlName="productName" />
+                            <p class="help is-danger" *ngIf="itemControlGroup.get('productName')?.errors?.['required']">Item Name is required</p>
                         </div>
 
                         <div class="control">
                             <label *ngIf="i === 0" class="label">Number</label>
-                            <input type="text" class="input" formControlName="productNumber" />
+                            <input type="number" class="input" formControlName="productNumber" />
+                            <p class="help is-danger" *ngIf="itemControlGroup.get('productNumber')?.errors?.['required']">Item Number is required</p>
                         </div>
 
                         <p class="control">
@@ -65,22 +71,11 @@
                     <a [routerLink]="['/tasks']" class="button is-link">Cancel</a>
                 </div>
                 <div class="control">
-                    <button (click)="handleSubmit('Send')" class="button is-success">
-                        Send
-                    </button>
-                </div>
-                <div class="control">
-                    <button (click)="handleSubmit('SuperSend')" class="button is-success">
-                        SuperSend
+                    <button type="button" (click)="handleSubmit('Complete')" class="button is-success">
+                        Complete
                     </button>
                 </div>
             </div>
         </app-box>
     </form>
-
-    <p>
-        Value:
-    </p>
-    <pre>{{ orderFormGroup.value | json }}</pre>
-
 </ng-container>

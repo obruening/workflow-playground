@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../_service/auth/auth.service';
 import { WorkflowService } from '../_service/workflow/workflow.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { WorkflowService } from '../_service/workflow/workflow.service';
 })
 export class WorkflowComponent implements OnInit {
 
-  constructor(private workflowService: WorkflowService, private router: Router) { }
+  constructor(private workflowService: WorkflowService, private router: Router, public authService: AuthService) { }
 
   ngOnInit(): void {
   }

@@ -1,8 +1,13 @@
 <app-box>
     <div class="content">
-        <h3>
-            The User Task "{{ task?.name }} is assigned to {{ task?.assignee }}".
+        <h3 *ngIf="task?.assignee == null; else assignedBlock">
+            The User Task "{{ task?.name }}" is not assigned.
         </h3>
+        <ng-template #assignedBlock>
+            <h3>
+                The User Task "{{ task?.name }}" is assigned to {{ task?.assignee }}.
+            </h3>
+        </ng-template>
 
         <h5>
             Process Definition "{{ task?.processDefinitionName }}" &#8211;

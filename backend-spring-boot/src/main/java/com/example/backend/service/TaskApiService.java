@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.backend.dto.TaskAssign;
 import com.example.backend.dto.TaskPayload;
 import com.example.backend.model.Order;
 
@@ -24,6 +25,10 @@ public class TaskApiService {
         Order order = taskPayload.getOrder();
         orderService.merge(order);
         taskService.complete(id);
+    }
+    
+    public void assign(TaskAssign taskAssign) {
+        taskService.setAssignee(taskAssign.getTaskId(), taskAssign.getUserName());
     }
 
 }

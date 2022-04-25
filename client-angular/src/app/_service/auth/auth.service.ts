@@ -41,4 +41,17 @@ export class AuthService {
 
     return this.user !== null ? this.user.id : '';
   }
+
+  getUser(): User | null {
+    
+    return this.user;
+  }
+
+  isMemberOfGroup(name: string) {
+    if (this.user) {
+      return this.user.groupList.map(group => group.name).find(groupName => groupName === name) !== undefined;
+    } else {
+      return false;
+    }
+  }
 }
