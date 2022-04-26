@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.backend.Group;
-import com.example.backend.User;
+import com.example.backend.dto.Group;
+import com.example.backend.dto.User;
 
 @Service
 @Transactional

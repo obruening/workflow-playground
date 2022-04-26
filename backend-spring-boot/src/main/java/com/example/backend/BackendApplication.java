@@ -30,5 +30,6 @@ public class BackendApplication implements CommandLineRunner {
 
             workflowService.createDemoProcessInstance("anna");
         }
+        logger.info("Backend is ready.");
     }
 }

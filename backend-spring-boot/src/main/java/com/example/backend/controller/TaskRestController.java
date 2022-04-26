@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.User;
 import com.example.backend.dto.TaskAssign;
 import com.example.backend.dto.TaskContainer;
 import com.example.backend.dto.TaskPayload;
 import com.example.backend.dto.TaskProjection;
+import com.example.backend.dto.User;
 import com.example.backend.model.Order;
 import com.example.backend.service.TaskApiService;
 import com.example.backend.service.UserService;

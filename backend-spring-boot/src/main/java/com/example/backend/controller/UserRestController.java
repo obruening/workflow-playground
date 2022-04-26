@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.User;
+import com.example.backend.dto.User;
 import com.example.backend.service.UserService;
 
 @RestController
